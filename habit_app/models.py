@@ -10,13 +10,11 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Habit(models.Model):
-    PERIOD = (
-            ('Каждый час', 'Каждый час'),
-            ('Каждые три часа', 'Каждые три часа'),
-            ('Ежедневно', 'Ежедневно'),
-            ('Раз в три дня', 'Раз в три дня'),
-            ('Еженедельно', 'Еженедельно',)
-    )
+    class Period(models.IntegerChoices):
+            DAILY = 1, 'Ежедневно'
+            IN_ONE_DAY = 2, 'Каждые два дня'
+            EVERY_THREE_DAYS = 3, 'Каждые три дня'
+            WEEKLY = 7, 'Еженедельно'
 
     owner = models.ForeignKey(get_user_model(), verbose_name='Пользователь', related_name='habit',
                               on_delete=models.CASCADE)
@@ -27,7 +25,7 @@ class Habit(models.Model):
     action = models.CharField(max_length=150, verbose_name='Действие', **NULLABLE)
     nice_habit = models.BooleanField(default=True, verbose_name='Признак приятной привычки')
     related_habit = models.ForeignKey('self', verbose_name='Связанная привычка', **NULLABLE, on_delete=models.PROTECT)
-    periodicity = models.CharField(max_length=30, verbose_name='Периодичность', choices=PERIOD, default='Ежедневно')
+    periodicity = models.SmallIntegerField(verbose_name='Периодичность', choices=Period.choices, default=Period.DAILY)
     reward = models.CharField(max_length=50, verbose_name='Вознаграждение', **NULLABLE)
     lead_time = models.DurationField(default=timedelta(minutes=2), verbose_name='Время на выполнение',)
     is_public = models.BooleanField(verbose_name='Признак публичности', default=True)
@@ -44,6 +42,7 @@ class Habit(models.Model):
         if self.nice_habit:
             self.related_habit = None
             self.reward = ''
+            super().save(*args, **kwargs)
         elif not self.nice_habit:
             if self.related_habit is not None:
                 self.reward = ''
