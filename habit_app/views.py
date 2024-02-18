@@ -1,8 +1,100 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, \
+    get_object_or_404
 from habit_app.models import Habit
+from habit_app.paginators import HabitPagination
 from habit_app.serializers import HabitSerializer
+
+
+class HabitCreateAPIView(CreateAPIView):
+    queryset = Habit.objects.all()
+    serializer_class = HabitSerializer
+
+
+class HabitListAPIView(ListAPIView):
+    queryset = Habit.objects.all()
+    serializer_class = HabitSerializer
+    pagination_class = HabitPagination
+
+
+class HabitRetrieveAPIView(RetrieveAPIView):
+    queryset = Habit.objects.all()
+    serializer_class = HabitSerializer
+
+
+class HabitUpdateAPIView(UpdateAPIView):
+    queryset = Habit.objects.all()
+    serializer_class = HabitSerializer
+
+
+class HabitDestroyAPIView(DestroyAPIView):
+    queryset = Habit.objects.all()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class HabitViewSet(ModelViewSet):

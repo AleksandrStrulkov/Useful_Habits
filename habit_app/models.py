@@ -24,7 +24,7 @@ class Habit(models.Model):
     time_when_execute = models.TimeField(verbose_name='Время когда выполнять')
     action = models.CharField(max_length=150, verbose_name='Действие', **NULLABLE)
     nice_habit = models.BooleanField(default=True, verbose_name='Признак приятной привычки')
-    related_habit = models.ForeignKey('self', verbose_name='Связанная привычка', **NULLABLE, on_delete=models.PROTECT)
+    related_habit = models.ForeignKey('self', verbose_name='Связанная привычка', **NULLABLE, on_delete=models.SET_NULL)
     periodicity = models.SmallIntegerField(verbose_name='Периодичность', choices=Period.choices, default=Period.DAILY)
     reward = models.CharField(max_length=50, verbose_name='Вознаграждение', **NULLABLE)
     lead_time = models.DurationField(default=timedelta(minutes=2), verbose_name='Время на выполнение',)
@@ -49,22 +49,6 @@ class Habit(models.Model):
             elif self.reward:
                 self.related_habit = None
             super().save(*args, **kwargs)
-
-    def clean(self):
-        errors = {}
-        if not self.nice_habit and self.related_habit is not None and self.reward:
-            errors['nice_habit'] = ValidationError('Для полезной привычки нужно указать связанную привычку или '
-                                                   'вознаграждение')
-        if self.nice_habit:
-            if self.related_habit is not None:
-                errors['related_habit'] = ValidationError('У приятной привычки не может быть связанной привычки')
-            elif self.reward:
-                errors['reward'] = ValidationError('У приятной привычки не может быть вознаграждения')
-        if errors:
-            raise ValidationError(errors)
-
-    def get_absolute_url(self):
-        return "/habit_nice/%s" % self.pk
 
             
 
