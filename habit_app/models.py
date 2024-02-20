@@ -17,7 +17,7 @@ class Habit(models.Model):
             WEEKLY = 7, 'Еженедельно'
 
     owner = models.ForeignKey(get_user_model(), verbose_name='Пользователь', related_name='habit',
-                              on_delete=models.CASCADE)
+                              on_delete=models.CASCADE, **NULLABLE)
     name = models.CharField(max_length=100, verbose_name='Название привычки', **NULLABLE)
     date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     place = models.CharField(max_length=100, verbose_name='Место выполнения', **NULLABLE)
