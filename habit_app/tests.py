@@ -192,6 +192,39 @@ class HabitListTestCase(APITestCase):
         # проверяем ответ на получение привычки
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
 
-
+    def test_validation_nice_habit(self):
+        data_nice_habit = {
+                'name': 'Приятная',
+                'place': 'Тест валидация',
+                'time_when_execute': '09:00:00',
+                'action': 'Тест валидация',
+                'nice_habit': False,
+                'related_habit': 1,
+                'periodicity': 7,
+                'reward': 'Тест',
+                'lead_time': "00:02:30",
+                'is_public': True
+        }
+        response = self.client.post(reverse('habit_app:post_habit'), data=data_nice_habit)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json(), {"related_habit": ['Недопустимый первичный ключ "1" - объект не существует.']},
+                {
+                    "nice_habit": [
+                            "[ErrorDetail(string='Для полезной привычки нужно указать связанную привычку или "
+                            "вознаграждение', code='invalid')]"
+                    ],
+                    "lead_time": [
+                            "[ErrorDetail(string='Время выполнения должно быть не больше 2 минут', code='invalid')]"
+                    ],
+                    "nice_habit_true": [
+                            "[ErrorDetail(string='Ели привычка приятная, то указывается true', code='invalid')]"
+                    ],
+                    "related_habit_true": [
+                            "[ErrorDetail(string='В связанные привычки могут попадать только с признаком "
+                            "приятной привычки', code='invalid')]"
+                    ]
+                }
+            )
 
 
