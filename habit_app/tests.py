@@ -31,7 +31,7 @@ class HabitListTestCase(APITestCase):
 
     def test_create_habit(self):
         """ Тестирование создания привычки """
-
+        self.maxDiff = None
         # задаем данные для создания привычки
         data_habit = {
             'owner': self.user.pk,
@@ -40,8 +40,9 @@ class HabitListTestCase(APITestCase):
             'time_when_execute': '05:30',
             'action': 'Тест действие',
             'nice_habit': False,
+            'related_habit': 2,
             'periodicity': 1,
-            'reward': 'Тест подарок',
+            'reward': '',
             'lead_time': "00:02:00",
             'is_public': True,
         }

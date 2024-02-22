@@ -13,10 +13,9 @@ class HabitValidator:
 
     def __call__(self, field):
         errors = {}
-        # if field['nice_habit']:
-        #     if field['related_habit'] or field['reward']:
-        #         errors['nice_habit'] = ValidationError('Для полезной привычки нужно указать связанную привычку или '
-        #             'вознаграждение')
+        if field['related_habit'] and field['reward']:
+            errors['nice_habit'] = ValidationError('Для полезной привычки нужно указать связанную привычку или '
+                'вознаграждение')
 
         if field['nice_habit']:
             if field['related_habit']:
