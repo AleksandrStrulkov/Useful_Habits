@@ -9,7 +9,7 @@ from users.models import User
 
 
 class HabitListTestCase(APITestCase):
-
+    maxDiff = None
     def setUp(self):
         self.user = User.objects.create(email='astrulkov@yandex.ru')
         self.user.set_password('1247')
@@ -29,26 +29,40 @@ class HabitListTestCase(APITestCase):
             is_public=True
         )
 
+        self.habit_true = Habit.objects.create(
+                owner=self.user,
+                name='Приятная',
+                place='Тест место',
+                time_when_execute='12:00',
+                action='Тест действие',
+                nice_habit=True,
+                periodicity=1,
+                reward='',
+                lead_time="00:02:00",
+                is_public=True
+        )
+
     def test_create_habit(self):
         """ Тестирование создания привычки """
         self.maxDiff = None
         # задаем данные для создания привычки
+
         data_habit = {
             'owner': self.user.pk,
             'name': 'Полезная',
             'place': 'Тест место',
-            'time_when_execute': '05:30',
+            'time_when_execute': '14:00:00',
             'action': 'Тест действие',
             'nice_habit': False,
-            'related_habit': 2,
-            'periodicity': 1,
-            'reward': '',
+            'related_habit': None,
+            'periodicity': 2,
+            'reward': 'Тест вознаграждение',
             'lead_time': "00:02:00",
             'is_public': True,
         }
 
         # создаем привычку
-        response = self.client.post('/api/habit/create/', data=data_habit)
+        response = self.client.post('/api/habit/create/', data=data_habit, format='json')
 
         # проверка ответа на создание привычки
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
@@ -68,10 +82,10 @@ class HabitListTestCase(APITestCase):
         # проверяем ответ на соответствие сохраненных данных
         self.assertEquals(
             response.json(),
-            {'count': 1,
+            {'count': 2,
              'next': None,
              'previous': None,
-             'results': [{'id': 6,
+             'results': [{'id': 10,
                           'owner': 5,
                           'name': 'Полезная',
                           'date': (now() + timedelta(hours=3)).strftime("%d.%m.%Y %H:%M"),
@@ -82,6 +96,19 @@ class HabitListTestCase(APITestCase):
                           'related_habit': None,
                           'periodicity': 1,
                           'reward': 'Тест вознаграждение',
+                          'lead_time': "00:02:00",
+                          'is_public': True},
+                         {'id': 11,
+                          'owner': 5,
+                          'name': 'Приятная',
+                          'date': (now() + timedelta(hours=3)).strftime("%d.%m.%Y %H:%M"),
+                          'place': 'Тест место',
+                          'time_when_execute': '12:00:00',
+                          'action': 'Тест действие',
+                          'nice_habit': True,
+                          'related_habit': None,
+                          'periodicity': 1,
+                          'reward': '',
                           'lead_time': "00:02:00",
                           'is_public': True},
                          ]
@@ -100,7 +127,7 @@ class HabitListTestCase(APITestCase):
         # проверяем ответ на соответствие сохраненных данных
         self.assertEquals(
             response.json(),
-            {'id': 5,
+            {'id': 8,
              'owner': 4,
              'name': 'Полезная',
              'date': (now() + timedelta(hours=3)).strftime("%d.%m.%Y %H:%M"),
@@ -122,19 +149,19 @@ class HabitListTestCase(APITestCase):
         data_habit_change = {
             'name': 'Полезная',
             'place': 'Тест изменение',
-            'time_when_execute': '08:30:00',
+            'time_when_execute': '08:30',
             'action': 'Тест изменение',
             'nice_habit': False,
-            'related_habit': 1,
+            'related_habit': None,
             'periodicity': 3,
-            'reward': '',
+            'reward': 'Тест',
             'lead_time': "00:00:30",
             'is_public': True
         }
 
         # получаем детали привычки
-        response = self.client.put(reverse('habit_app:put_patch_habit', args=[self.habit.id]),
-                data=data_habit_change)
+        response = self.client.patch(reverse('habit_app:put_patch_habit', args=[self.habit.id]),
+                data=data_habit_change, format='json')
 
         # проверяем ответ на получение привычки
         self.assertEquals(response.status_code, status.HTTP_200_OK)
@@ -150,9 +177,9 @@ class HabitListTestCase(APITestCase):
              'time_when_execute': '08:30:00',
              'action': 'Тест изменение',
              'nice_habit': False,
-             'related_habit': 1,
+             'related_habit': None,
              'periodicity': 3,
-             'reward': '',
+             'reward': 'Тест',
              'lead_time': '00:00:30',
              'is_public': True}
         )
@@ -164,5 +191,7 @@ class HabitListTestCase(APITestCase):
 
         # проверяем ответ на получение привычки
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
 
 

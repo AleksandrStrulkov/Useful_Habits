@@ -33,5 +33,10 @@ class HabitValidator:
             if not field['nice_habit']:
                 errors['nice_habit_true'] = ValidationError('Ели привычка приятная, то указывается true')
 
+        if field['related_habit']:
+            if not field['related_habit'].nice_habit:
+                errors['related_habit_true'] = ValidationError('В связанные привычки могут попадать только с признаком '
+                                                               'приятной привычки')
+
         if errors:
             raise ValidationError(errors)
