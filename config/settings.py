@@ -166,6 +166,7 @@ if CASH_ENABLE:
 AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%d.%m.%Y %H:%M',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],

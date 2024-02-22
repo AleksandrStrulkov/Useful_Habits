@@ -5,10 +5,11 @@ from config import settings
 
 
 def create_reminder(habit):
+
     crontab_schedule, _ = CrontabSchedule.objects.get_or_create(
-        minute=habit.time_when_execute.minute - 1,
+        minute=habit.time_when_execute.minute,
         hour=habit.time_when_execute.hour,
-        day_of_week='*' if habit.periodicity == 1 else '2,4,6' if habit.periodicity == 2
+        day_of_week='*' if habit.periodicity == 1 else '1,3,5,7' if habit.periodicity == 2
         else '1,4,7' if habit.periodicity == 3 else '6',
         # day_of_week='*' if habit.periodicity == 1 else f'*/{habit.periodicity}',
         timezone=settings.TIME_ZONE

@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework.permissions import IsAuthenticated, AllowAny, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, \
@@ -17,6 +19,7 @@ class HabitCreateAPIView(CreateAPIView):
     def perform_create(self, serializer):
         new_habit = serializer.save()
         new_habit.owner = self.request.user
+
         create_reminder(new_habit)
         new_habit.save()
 
