@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta, time
-
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
 from config import settings
 

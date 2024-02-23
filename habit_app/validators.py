@@ -1,6 +1,4 @@
-import re
 from datetime import timedelta
-
 from rest_framework.serializers import ValidationError
 
 

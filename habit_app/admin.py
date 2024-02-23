@@ -10,6 +10,3 @@ class HabitAdmin(admin.ModelAdmin):
                     'periodicity', 'reward', 'lead_time', 'is_public')
     list_filter = ('name',)
     search_fields = ('name', 'action',)
-
-
-

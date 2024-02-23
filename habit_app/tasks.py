@@ -1,5 +1,3 @@
-import datetime
-
 import requests
 from celery import shared_task
 from config import settings
@@ -37,4 +35,3 @@ def create_requests(text):
         data={
             'chat_id': USER_ID,
             'text': text})
-
