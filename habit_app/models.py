@@ -7,15 +7,15 @@ NULLABLE = {'blank': True, 'null': True}
 
 class Habit(models.Model):
     NAME = (
-            ('Полезная', 'Полезная'),
-            ('Приятная', 'Приятная')
+        ('Полезная', 'Полезная'),
+        ('Приятная', 'Приятная')
     )
 
     class Period(models.IntegerChoices):
-            DAILY = 1, 'Ежедневно'
-            IN_ONE_DAY = 2, 'Каждые два дня'
-            EVERY_THREE_DAYS = 3, 'Каждые три дня'
-            WEEKLY = 7, 'Еженедельно'
+        DAILY = 1, 'Ежедневно'
+        IN_ONE_DAY = 2, 'Каждые два дня'
+        EVERY_THREE_DAYS = 3, 'Каждые три дня'
+        WEEKLY = 7, 'Еженедельно'
 
     owner = models.ForeignKey(get_user_model(), verbose_name='Пользователь', related_name='habit',
                               on_delete=models.CASCADE, **NULLABLE)
@@ -52,7 +52,3 @@ class Habit(models.Model):
             elif self.reward:
                 self.related_habit = None
             super().save(*args, **kwargs)
-
-            
-
-

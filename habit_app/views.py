@@ -1,6 +1,5 @@
-from rest_framework.permissions import IsAuthenticated, AllowAny, DjangoModelPermissionsOrAnonReadOnly
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, \
-    get_object_or_404
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 from habit_app.models import Habit
 from habit_app.paginators import HabitPagination
 from habit_app.permissions import IsOwner

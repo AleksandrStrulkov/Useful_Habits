@@ -13,7 +13,7 @@ class HabitValidator:
         errors = {}
         if field['related_habit'] and field['reward']:
             errors['nice_habit'] = ValidationError('Для полезной привычки нужно указать связанную привычку или '
-                'вознаграждение')
+                                                   'вознаграждение')
 
         if field['nice_habit']:
             if field['related_habit']:

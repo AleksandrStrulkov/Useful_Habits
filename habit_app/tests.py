@@ -31,16 +31,16 @@ class HabitListTestCase(APITestCase):
         )
 
         self.habit_true = Habit.objects.create(
-                owner=self.user,
-                name='Приятная',
-                place='Тест место',
-                time_when_execute='12:00',
-                action='Тест действие',
-                nice_habit=True,
-                periodicity=1,
-                reward='',
-                lead_time="00:02:00",
-                is_public=True
+            owner=self.user,
+            name='Приятная',
+            place='Тест место',
+            time_when_execute='12:00',
+            action='Тест действие',
+            nice_habit=True,
+            periodicity=1,
+            reward='',
+            lead_time="00:02:00",
+            is_public=True
         )
 
     def test_create_habit(self):
@@ -232,6 +232,6 @@ class HabitListTestCase(APITestCase):
                 "related_habit_true": [
                     "[ErrorDetail(string='В связанные привычки могут попадать только с признаком "
                     "приятной привычки', code='invalid')]"
-                    ]
-                }
-            )
+                ]
+            }
+        )

@@ -2,7 +2,7 @@ from django.urls import path
 from habit_app.apps import HabitAppConfig
 
 
-from habit_app.views import HabitViewSet, HabitCreateAPIView, HabitListAPIView, HabitRetrieveAPIView, \
+from habit_app.views import HabitCreateAPIView, HabitListAPIView, HabitRetrieveAPIView, \
     HabitUpdateAPIView, HabitDestroyAPIView, HabitPublicListAPIView
 
 app_name = HabitAppConfig.name

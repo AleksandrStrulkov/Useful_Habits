@@ -206,5 +206,3 @@ CELERY_RESULT_SERIALIZER = 'json'
 TELEGRAM_URL = 'https://api.telegram.org/bot'
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 USER_ID_TELEGRAM = os.getenv('USER_ID_TELEGRAM')
-
-
