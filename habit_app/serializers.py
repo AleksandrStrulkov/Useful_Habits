@@ -1,9 +1,6 @@
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField
-
 from habit_app.models import Habit
 from habit_app.validators import HabitValidator
-from users.models import User
 
 
 class HabitSerializer(serializers.ModelSerializer):
