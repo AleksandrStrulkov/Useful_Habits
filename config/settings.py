@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-toms!!!-$hiuuag3donlne)32hfz!*=&au4+5u2b&ue(+ja72f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
