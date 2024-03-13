@@ -24,12 +24,15 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-toms!!!-$hiuuag3donlne)32hfz!*=&au4+5u2b&ue(+ja72f"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# DEBUG = True
+DEBUG = bool(os.getenv('DJANGO_DEBUG', True))
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOST')
+# ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,7 +95,7 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'PORT': os.getenv('POSTGRES_PORT'),
-        # 'HOST': os.getenv('POSTGRES_HOST'),
+        'HOST': os.getenv('POSTGRES_HOST'),
     }
 }
 
